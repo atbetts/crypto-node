@@ -16,13 +16,7 @@ def getCoinData(coinname,num):
         a=json.loads(json.dumps(coin))
         coin2coin = a['symbol']
         
-        if(num==2):
-            if((coinname[0:2] in coin2coin) and (coinname[3:5] in coin2coin)):
-                valuelist.append(a['symbol']+'\t'+a['bidPrice'])
-        elif(num==1): 
-            if coinname in coin2coin:
-                valuelist.append(a['symbol']+'\t'+a['bidPrice'])
-        else:
-            continue
+        if coinname in coin2coin:
+            valuelist.append(a['symbol']+'\t'+a['bidPrice'])
     return valuelist
 print(getCoinData('ETHBTC',1))

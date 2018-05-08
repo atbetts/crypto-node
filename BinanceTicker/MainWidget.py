@@ -22,7 +22,7 @@ class StockWidget(QWidget):
         self.button.clicked.connect(self.updateTicker)
     def updateTicker(self):
         coin = self.textEdit.toPlainText()
-        coinlist = cd.getCoinData(coin,int(6/len(coin)))
+        coinlist = cd.getCoinData(coin,1)
         connector = '-'
         self.ticker.setText(connector.join(coinlist))
         self.textEdit.clear()
