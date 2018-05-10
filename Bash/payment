@@ -1,0 +1,30 @@
+#!/bin/bash
+amount=0
+address=0
+while test $# -gt 0; do
+        case "$1" in
+                --amount)
+                        shift
+                        amount=$1
+                       
+                        shift
+                        ;;
+                --address)
+                        shift
+                        address=$1
+                        
+                        shift
+                        ;;
+                *)
+			echo "Please Specify address and amount with --address and --amount"
+                        break
+                        ;;
+        esac
+done
+
+./electrum-smart daemon start >> log
+./electrum-smart daemon load_wallet >> log
+echo "Paying " $amount "to" $address >> transaction_log
+./electrum-smart payto $address $amount >> transaction
+./electrum-smart daemon close_wallet >> log
+./electrum-smart daemon stop
