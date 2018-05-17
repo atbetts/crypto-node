@@ -1,6 +1,6 @@
 #!/bin/bash
 amount=0
-address=0
+address=107
 while test $# -gt 0; do
         case "$1" in
                 --amount)
@@ -22,9 +22,19 @@ while test $# -gt 0; do
         esac
 done
 
-./electrum-smart daemon start >> log
-./electrum-smart daemon load_wallet >> log
-echo "Paying " $amount "to" $address >> transaction_log
-./electrum-smart payto $address $amount >> transaction
-./electrum-smart daemon close_wallet >> log
+if [ $amount -eq 0 ]
+then
+	echo "Attempted to send 0 smartcash"
+	exit
+elif [ $address == 107 ] 
+then
+	echo "No address entered"
+	exit
+fi
+
+./electrum-smart daemon start 
+./electrum-smart daemon load_wallet 
+echo "Paying " $amount "to" $address 
+./electrum-smart payto $address $amount 
+./electrum-smart daemon close_wallet 
 ./electrum-smart daemon stop
