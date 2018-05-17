@@ -1,0 +1,1 @@
+ACTION=="add",ENV{DEVTYPE}=="disk",SUBSYSTEM=="block",ATTRS{idVendor}=="058f", ATTRS{idProduct}=="6387", RUN+="/home/atbetts/electrum-smart/testscript.sh"
