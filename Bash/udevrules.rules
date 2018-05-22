@@ -1,1 +1,2 @@
-ACTION=="add",ENV{DEVTYPE}=="disk",SUBSYSTEM=="block",ATTRS{idVendor}=="058f", ATTRS{idProduct}=="6387", RUN+="/home/atbetts/electrum-smart/testscript.sh"
+# Run Script as a new process when any device is added
+KERNEL=="sd[a-z]", SUBSYSTEM=="block", ACTION=="add", RUN+="/bin/su root -c /usr/bin/mountpointer"

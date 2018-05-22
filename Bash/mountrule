@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# If the script detects the existence of both the source and destination disks
+# then the contents ot the GOPRO folder is synchronised with files on the BACKUPDISK folder.
+# Ensure that the Partition Label's on all your devices are set accordingly.
+
+## Make sure the script isn't already running from a previous disk connection
+################################################################################
+if [ `ps -e | grep -c $(basename $0)` -gt 2 ]; then exit 0; fi
+################################################################################
+
+sleeptime=5
+logfile=/home/abetts/mount.log
+source=/home/abetts/
+destination=/media/abetts/00AC-9475
+SourceCounter=20
+DestinationCounter=20
+
+# Start a new log file and Add the  email stuff to the top
+############################################################
+echo "Script Started" >> $logfile
+date >> $logfile
+
+# Test if the Source disk is connected.
+until [ $SourceCounter -lt 1 ]
+do
+	echo $SourceCounter >> $logfile
+	if [ -d $source ]
+	then
+		echo "== Source Disk Found - Look for the Destination Disk ==" >>$logfile
+		date >> $logfile
+		let SourceCounter=0
+
+		# Test if the Destination disk is connected.
+		until [ $DestinationCounter -lt 1 ]
+		do
+			echo $DestinationCounter >> $logfile
+			if [ -d $destination ]
+			then
+				echo "== Destination Disk Found - Transaction Started ==" >> $logfile
+				echo "Transaction Complete" >> $logfile
+				echo "Unmount the  USB  disks" >> $logfile
+				umount $destination >> $logfile
+				date >> $logfile
+				echo "== Electrum Copy Complete ==" >> $logfile
+				let DestinationCounter=0
+			else
+				echo "== Looking for the Destination Disk ==" >>$logfile
+				sleep $sleeptime
+			fi
+			let DestinationCounter=DestinationCounter-1
+		done
+
+	else
+		echo "== Looking for the Source Disk  ==" >>$logfile
+		sleep $sleeptime
+	fi
+	let SourceCounter=SourceCounter-1
+done
+
+echo "Script Complete" >> $logfile
+echo "===============" >> $logfile
