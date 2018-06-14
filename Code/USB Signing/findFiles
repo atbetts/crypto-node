@@ -1,8 +1,0 @@
-#!/bin/bash/
-for file in *.txn
-do
-    echo "$file"
-    cat "$file" | ./electrum-smart signtransaction - > 'sign'$file
-    sleep 1
-    cat "$file"
-done

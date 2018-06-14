@@ -1,0 +1,8 @@
+[Unit]
+Description=Sign SmartCash Transactions
+
+[Service]
+ExecStart=/home/linaro/electrum-smart/point_electrum.sh
+
+[Install]
+WantedBy=multi-user.target
