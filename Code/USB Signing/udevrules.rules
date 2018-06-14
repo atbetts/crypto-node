@@ -1,2 +1,0 @@
-# Run Script as a new process when any device is added
-KERNEL=="sd[a-z]", SUBSYSTEM=="block", ACTION=="add", RUN+="/bin/su root -c /usr/bin/mountpointer"
